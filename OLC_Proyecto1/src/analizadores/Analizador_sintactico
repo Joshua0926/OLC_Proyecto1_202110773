@@ -1,0 +1,59 @@
+package analizadores;
+import java_cup.runtime.*;
+
+parser code
+{:   
+:}
+
+terminal String tkRconj, tkDosPuntos, tkFlecha, tkComa, tkOnda, 
+tkLlaveA, tkLlaveC, tkConcatenacion, tkDisyuncion, tkKleene,tkPositiva, 
+tkBooleana, tkPorcentaje, tkPuntoComa, tkMinuscula, tkMayuscula, tkNumero, 
+tkEspeciales, tkIdentificador, tkChar, tkString;
+
+non terminal Programa;
+non terminal declaraciones;
+non terminal declaracion;
+non terminal notacion_conjuntos;
+non terminal contenedor_conj_comas;
+non terminal conj_comas;
+non terminal expresion_regular;
+non terminal pruebas; 
+non terminal prueba;
+
+start with Programa;
+
+Programa::=  tkLlaveA declaraciones  tkPorcentaje  tkPorcentaje  tkPorcentaje  tkPorcentaje pruebas  tkLlaveC;
+
+declaraciones::= declaraciones declaracion|
+            declaracion;
+
+declaracion::=  tkRconj tkDosPuntos tkIdentificador tkFlecha notacion_conjuntos tkPuntoComa |
+            tkIdentificador tkFlecha expresion_regular tkPuntoComa ;
+
+notacion_conjuntos::= tkMinuscula tkOnda tkMinuscula|
+                    tkMayuscula tkOnda tkMayuscula|
+                    tkNumero tkOnda tkNumero|
+                    tkEspeciales tkOnda tkEspeciales|
+                    contenedor_conj_comas ;
+
+contenedor_conj_comas::= contenedor_conj_comas:a tkComa conj_comas:b  |
+                  conj_comas:a;
+
+conj_comas::= tkMinuscula|
+                 tkMayuscula|
+                 tkNumero|
+                 tkEspeciales;
+
+expresion_regular ::= tkConcatenacion expresion_regular expresion_regular |
+                    tkDisyuncion expresion_regular expresion_regular |
+                    tkKleene expresion_regular |
+                    tkPositiva expresion_regular |
+                    tkBooleana expresion_regular |
+                    tkLlaveA tkIdentificador  tkLlaveC |
+                    tkChar;
+
+pruebas ::= pruebas prueba|
+            prueba;
+
+prueba ::= tkIdentificador tkDosPuntos tkString tkPuntoComa|
+           tkIdentificador tkDosPuntos tkChar tkPuntoComa;
