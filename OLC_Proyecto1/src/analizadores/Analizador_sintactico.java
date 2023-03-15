@@ -6,6 +6,7 @@
 package analizadores;
 
 import java_cup.runtime.*;
+import java.util.ArrayList;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -33,12 +34,12 @@ public class Analizador_sintactico extends java_cup.runtime.lr_parser {
     unpackFromStrings(new String[] {
     "\000\034\000\002\002\004\000\002\002\012\000\002\003" +
     "\004\000\002\003\003\000\002\004\010\000\002\004\006" +
-    "\000\002\005\005\000\002\005\005\000\002\005\005\000" +
-    "\002\005\005\000\002\005\003\000\002\006\005\000\002" +
-    "\006\003\000\002\007\003\000\002\007\003\000\002\007" +
-    "\003\000\002\007\003\000\002\010\005\000\002\010\005" +
-    "\000\002\010\004\000\002\010\004\000\002\010\004\000" +
-    "\002\010\005\000\002\010\003\000\002\011\004\000\002" +
+    "\000\002\010\005\000\002\010\005\000\002\010\004\000" +
+    "\002\010\004\000\002\010\004\000\002\010\005\000\002" +
+    "\010\003\000\002\005\005\000\002\005\005\000\002\005" +
+    "\005\000\002\005\005\000\002\005\003\000\002\006\005" +
+    "\000\002\006\003\000\002\007\003\000\002\007\003\000" +
+    "\002\007\003\000\002\007\003\000\002\011\004\000\002" +
     "\011\003\000\002\012\006\000\002\012\006" });
 
   /** Access to production table. */
@@ -53,22 +54,22 @@ public class Analizador_sintactico extends java_cup.runtime.lr_parser {
     "\010\004\ufffe\020\ufffe\026\ufffe\001\002\000\004\005\012" +
     "\001\002\000\004\026\013\001\002\000\004\006\014\001" +
     "\002\000\012\022\015\023\020\024\017\025\016\001\002" +
-    "\000\010\007\ufff4\010\041\021\ufff4\001\002\000\010\007" +
-    "\ufff1\010\037\021\ufff1\001\002\000\010\007\ufff2\010\035" +
-    "\021\ufff2\001\002\000\010\007\ufff3\010\033\021\ufff3\001" +
-    "\002\000\006\007\ufff5\021\ufff5\001\002\000\004\021\032" +
-    "\001\002\000\006\007\024\021\ufff7\001\002\000\012\022" +
-    "\025\023\026\024\027\025\030\001\002\000\006\007\ufff4" +
-    "\021\ufff4\001\002\000\006\007\ufff3\021\ufff3\001\002\000" +
-    "\006\007\ufff2\021\ufff2\001\002\000\006\007\ufff1\021\ufff1" +
-    "\001\002\000\006\007\ufff6\021\ufff6\001\002\000\010\004" +
+    "\000\010\007\uffed\010\041\021\uffed\001\002\000\010\007" +
+    "\uffea\010\037\021\uffea\001\002\000\010\007\uffeb\010\035" +
+    "\021\uffeb\001\002\000\010\007\uffec\010\033\021\uffec\001" +
+    "\002\000\006\007\uffee\021\uffee\001\002\000\004\021\032" +
+    "\001\002\000\006\007\024\021\ufff0\001\002\000\012\022" +
+    "\025\023\030\024\026\025\027\001\002\000\006\007\uffed" +
+    "\021\uffed\001\002\000\006\007\uffeb\021\uffeb\001\002\000" +
+    "\006\007\uffea\021\uffea\001\002\000\006\007\uffec\021\uffec" +
+    "\001\002\000\006\007\uffef\021\uffef\001\002\000\010\004" +
     "\ufffd\020\ufffd\026\ufffd\001\002\000\004\023\034\001\002" +
-    "\000\004\021\ufffa\001\002\000\004\024\036\001\002\000" +
-    "\004\021\ufff9\001\002\000\004\025\040\001\002\000\004" +
-    "\021\ufff8\001\002\000\004\022\042\001\002\000\004\021" +
-    "\ufffb\001\002\000\020\011\050\013\051\014\053\015\045" +
-    "\016\046\017\047\027\044\001\002\000\022\011\uffea\013" +
-    "\uffea\014\uffea\015\uffea\016\uffea\017\uffea\021\uffea\027\uffea" +
+    "\000\004\021\ufff3\001\002\000\004\024\036\001\002\000" +
+    "\004\021\ufff2\001\002\000\004\025\040\001\002\000\004" +
+    "\021\ufff1\001\002\000\004\022\042\001\002\000\004\021" +
+    "\ufff4\001\002\000\020\011\050\013\051\014\053\015\045" +
+    "\016\046\017\047\027\044\001\002\000\022\011\ufff5\013" +
+    "\ufff5\014\ufff5\015\ufff5\016\ufff5\017\ufff5\021\ufff5\027\ufff5" +
     "\001\002\000\020\011\050\013\051\014\053\015\045\016" +
     "\046\017\047\027\044\001\002\000\020\011\050\013\051" +
     "\014\053\015\045\016\046\017\047\027\044\001\002\000" +
@@ -78,24 +79,24 @@ public class Analizador_sintactico extends java_cup.runtime.lr_parser {
     "\001\002\000\004\021\056\001\002\000\020\011\050\013" +
     "\051\014\053\015\045\016\046\017\047\027\044\001\002" +
     "\000\020\011\050\013\051\014\053\015\045\016\046\017" +
-    "\047\027\044\001\002\000\022\011\uffef\013\uffef\014\uffef" +
-    "\015\uffef\016\uffef\017\uffef\021\uffef\027\uffef\001\002\000" +
+    "\047\027\044\001\002\000\022\011\ufffa\013\ufffa\014\ufffa" +
+    "\015\ufffa\016\ufffa\017\ufffa\021\ufffa\027\ufffa\001\002\000" +
     "\010\004\ufffc\020\ufffc\026\ufffc\001\002\000\020\011\050" +
     "\013\051\014\053\015\045\016\046\017\047\027\044\001" +
-    "\002\000\022\011\ufff0\013\ufff0\014\ufff0\015\ufff0\016\ufff0" +
-    "\017\ufff0\021\ufff0\027\ufff0\001\002\000\004\012\062\001" +
-    "\002\000\022\011\uffeb\013\uffeb\014\uffeb\015\uffeb\016\uffeb" +
-    "\017\uffeb\021\uffeb\027\uffeb\001\002\000\022\011\uffec\013" +
-    "\uffec\014\uffec\015\uffec\016\uffec\017\uffec\021\uffec\027\uffec" +
-    "\001\002\000\022\011\uffed\013\uffed\014\uffed\015\uffed\016" +
-    "\uffed\017\uffed\021\uffed\027\uffed\001\002\000\022\011\uffee" +
-    "\013\uffee\014\uffee\015\uffee\016\uffee\017\uffee\021\uffee\027" +
-    "\uffee\001\002\000\004\020\070\001\002\000\010\004\uffff" +
+    "\002\000\022\011\ufffb\013\ufffb\014\ufffb\015\ufffb\016\ufffb" +
+    "\017\ufffb\021\ufffb\027\ufffb\001\002\000\004\012\062\001" +
+    "\002\000\022\011\ufff6\013\ufff6\014\ufff6\015\ufff6\016\ufff6" +
+    "\017\ufff6\021\ufff6\027\ufff6\001\002\000\022\011\ufff7\013" +
+    "\ufff7\014\ufff7\015\ufff7\016\ufff7\017\ufff7\021\ufff7\027\ufff7" +
+    "\001\002\000\022\011\ufff8\013\ufff8\014\ufff8\015\ufff8\016" +
+    "\ufff8\017\ufff8\021\ufff8\027\ufff8\001\002\000\022\011\ufff9" +
+    "\013\ufff9\014\ufff9\015\ufff9\016\ufff9\017\ufff9\021\ufff9\027" +
+    "\ufff9\001\002\000\004\020\070\001\002\000\010\004\uffff" +
     "\020\uffff\026\uffff\001\002\000\004\020\071\001\002\000" +
-    "\004\020\072\001\002\000\004\026\073\001\002\000\004" +
-    "\005\100\001\002\000\006\012\076\026\073\001\002\000" +
-    "\006\012\uffe8\026\uffe8\001\002\000\004\002\000\001\002" +
-    "\000\006\012\uffe9\026\uffe9\001\002\000\006\027\101\030" +
+    "\004\020\072\001\002\000\004\026\074\001\002\000\006" +
+    "\012\uffe8\026\uffe8\001\002\000\004\005\100\001\002\000" +
+    "\006\012\077\026\074\001\002\000\006\012\uffe9\026\uffe9" +
+    "\001\002\000\004\002\000\001\002\000\006\027\101\030" +
     "\102\001\002\000\004\021\104\001\002\000\004\021\103" +
     "\001\002\000\006\012\uffe7\026\uffe7\001\002\000\006\012" +
     "\uffe6\026\uffe6\001\002\000\004\002\001\001\002" });
@@ -125,9 +126,9 @@ public class Analizador_sintactico extends java_cup.runtime.lr_parser {
     "\000\004\010\057\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\006\011\073\012\074" +
-    "\001\001\000\002\001\001\000\004\012\076\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\002\001\001\000\002\001\001\000\006\011\074\012\072" +
+    "\001\001\000\002\001\001\000\002\001\001\000\004\012" +
+    "\075\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001" });
 
@@ -168,6 +169,7 @@ public class Analizador_sintactico extends java_cup.runtime.lr_parser {
 
 
    
+  public ArrayList<Expresion_regular> expresiones = new ArrayList<Expresion_regular>();
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
@@ -209,7 +211,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // Programa ::= tkLlaveA declaraciones tkPorcentaje tkPorcentaje tkPorcentaje tkPorcentaje pruebas tkLlaveC 
+          case 1: // Programa ::= tkLlaveA declaraciones tkPorcentaje tkPorcentaje tkPorcentaje tkPorcentaje evaluaciones tkLlaveC 
             {
               Object RESULT =null;
 
@@ -248,13 +250,145 @@ class CUP$Analizador_sintactico$actions {
           case 5: // declaracion ::= tkIdentificador tkFlecha expresion_regular tkPuntoComa 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
+		 expresiones.add(new Expresion_regular(a, (Nodo)b)); 
               CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("declaracion",2, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // notacion_conjuntos ::= tkMinuscula tkOnda tkMinuscula 
+          case 6: // expresion_regular ::= tkConcatenacion expresion_regular expresion_regular 
+            {
+              Object RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
+		 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            nuevo.setDer((Nodo)c);
+                            RESULT =  nuevo; 
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+            }
+          return CUP$Analizador_sintactico$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 7: // expresion_regular ::= tkDisyuncion expresion_regular expresion_regular 
+            {
+              Object RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
+		 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            nuevo.setDer((Nodo)c);
+                            RESULT =  nuevo; 
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+            }
+          return CUP$Analizador_sintactico$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // expresion_regular ::= tkKleene expresion_regular 
+            {
+              Object RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
+		 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            RESULT =  nuevo; 
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+            }
+          return CUP$Analizador_sintactico$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 9: // expresion_regular ::= tkPositiva expresion_regular 
+            {
+              Object RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
+		 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            RESULT =  nuevo; 
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+            }
+          return CUP$Analizador_sintactico$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // expresion_regular ::= tkBooleana expresion_regular 
+            {
+              Object RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
+		 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            RESULT =  nuevo; 
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+            }
+          return CUP$Analizador_sintactico$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 11: // expresion_regular ::= tkLlaveA tkIdentificador tkLlaveC 
+            {
+              Object RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)).value;
+		 Nodo nuevo = new Nodo(a);
+                              nuevo.setHoja(true);
+                              RESULT =  nuevo; 
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+            }
+          return CUP$Analizador_sintactico$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 12: // expresion_regular ::= tkChar 
+            {
+              Object RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Analizador_sintactico$stack.peek()).value;
+		 Nodo nuevo = new Nodo(a);
+                              nuevo.setHoja(true);
+                              RESULT =  nuevo; 
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+            }
+          return CUP$Analizador_sintactico$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 13: // notacion_conjuntos ::= tkMinuscula tkOnda tkMinuscula 
             {
               Object RESULT =null;
 
@@ -263,7 +397,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // notacion_conjuntos ::= tkMayuscula tkOnda tkMayuscula 
+          case 14: // notacion_conjuntos ::= tkMayuscula tkOnda tkMayuscula 
             {
               Object RESULT =null;
 
@@ -272,7 +406,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // notacion_conjuntos ::= tkNumero tkOnda tkNumero 
+          case 15: // notacion_conjuntos ::= tkNumero tkOnda tkNumero 
             {
               Object RESULT =null;
 
@@ -281,7 +415,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // notacion_conjuntos ::= tkEspeciales tkOnda tkEspeciales 
+          case 16: // notacion_conjuntos ::= tkEspeciales tkOnda tkEspeciales 
             {
               Object RESULT =null;
 
@@ -290,7 +424,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // notacion_conjuntos ::= contenedor_conj_comas 
+          case 17: // notacion_conjuntos ::= contenedor_conj_comas 
             {
               Object RESULT =null;
 
@@ -299,7 +433,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // contenedor_conj_comas ::= contenedor_conj_comas tkComa conj_comas 
+          case 18: // contenedor_conj_comas ::= contenedor_conj_comas tkComa conj_comas 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)).left;
@@ -314,7 +448,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // contenedor_conj_comas ::= conj_comas 
+          case 19: // contenedor_conj_comas ::= conj_comas 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()).left;
@@ -326,7 +460,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // conj_comas ::= tkMinuscula 
+          case 20: // conj_comas ::= tkMinuscula 
             {
               Object RESULT =null;
 
@@ -335,7 +469,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // conj_comas ::= tkMayuscula 
+          case 21: // conj_comas ::= tkMayuscula 
             {
               Object RESULT =null;
 
@@ -344,7 +478,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // conj_comas ::= tkNumero 
+          case 22: // conj_comas ::= tkNumero 
             {
               Object RESULT =null;
 
@@ -353,7 +487,7 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // conj_comas ::= tkEspeciales 
+          case 23: // conj_comas ::= tkEspeciales 
             {
               Object RESULT =null;
 
@@ -362,101 +496,38 @@ class CUP$Analizador_sintactico$actions {
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // expresion_regular ::= tkConcatenacion expresion_regular expresion_regular 
+          case 24: // evaluaciones ::= evaluaciones evaluacion 
             {
               Object RESULT =null;
 
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("evaluaciones",7, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // expresion_regular ::= tkDisyuncion expresion_regular expresion_regular 
+          case 25: // evaluaciones ::= evaluacion 
             {
               Object RESULT =null;
 
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("evaluaciones",7, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // expresion_regular ::= tkKleene expresion_regular 
+          case 26: // evaluacion ::= tkIdentificador tkDosPuntos tkString tkPuntoComa 
             {
               Object RESULT =null;
 
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("evaluacion",8, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // expresion_regular ::= tkPositiva expresion_regular 
+          case 27: // evaluacion ::= tkIdentificador tkDosPuntos tkChar tkPuntoComa 
             {
               Object RESULT =null;
 
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
-            }
-          return CUP$Analizador_sintactico$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // expresion_regular ::= tkBooleana expresion_regular 
-            {
-              Object RESULT =null;
-
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
-            }
-          return CUP$Analizador_sintactico$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // expresion_regular ::= tkLlaveA tkIdentificador tkLlaveC 
-            {
-              Object RESULT =null;
-
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
-            }
-          return CUP$Analizador_sintactico$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 23: // expresion_regular ::= tkChar 
-            {
-              Object RESULT =null;
-
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("expresion_regular",6, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
-            }
-          return CUP$Analizador_sintactico$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 24: // pruebas ::= pruebas prueba 
-            {
-              Object RESULT =null;
-
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("pruebas",7, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
-            }
-          return CUP$Analizador_sintactico$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 25: // pruebas ::= prueba 
-            {
-              Object RESULT =null;
-
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("pruebas",7, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
-            }
-          return CUP$Analizador_sintactico$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 26: // prueba ::= tkIdentificador tkDosPuntos tkString tkPuntoComa 
-            {
-              Object RESULT =null;
-
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("prueba",8, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
-            }
-          return CUP$Analizador_sintactico$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 27: // prueba ::= tkIdentificador tkDosPuntos tkChar tkPuntoComa 
-            {
-              Object RESULT =null;
-
-              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("prueba",8, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
+              CUP$Analizador_sintactico$result = parser.getSymbolFactory().newSymbol("evaluacion",8, ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.elementAt(CUP$Analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$Analizador_sintactico$result;
 

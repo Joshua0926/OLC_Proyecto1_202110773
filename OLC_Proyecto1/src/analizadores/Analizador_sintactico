@@ -1,8 +1,10 @@
 package analizadores;
 import java_cup.runtime.*;
+import java.util.ArrayList;
 
 parser code
 {:   
+  public ArrayList<Expresion_regular> expresiones = new ArrayList<Expresion_regular>();
 :}
 
 terminal String tkRconj, tkDosPuntos, tkFlecha, tkComa, tkOnda, 
@@ -17,18 +19,48 @@ non terminal notacion_conjuntos;
 non terminal contenedor_conj_comas;
 non terminal conj_comas;
 non terminal expresion_regular;
-non terminal pruebas; 
-non terminal prueba;
+non terminal evaluaciones; 
+non terminal evaluacion;
 
 start with Programa;
 
-Programa::=  tkLlaveA declaraciones  tkPorcentaje  tkPorcentaje  tkPorcentaje  tkPorcentaje pruebas  tkLlaveC;
+Programa::=  tkLlaveA declaraciones  tkPorcentaje  tkPorcentaje  tkPorcentaje  tkPorcentaje evaluaciones  tkLlaveC;
 
 declaraciones::= declaraciones declaracion|
             declaracion;
 
 declaracion::=  tkRconj tkDosPuntos tkIdentificador tkFlecha notacion_conjuntos tkPuntoComa |
-            tkIdentificador tkFlecha expresion_regular tkPuntoComa ;
+            tkIdentificador:a tkFlecha expresion_regular:b tkPuntoComa {: expresiones.add(new Expresion_regular(a, (Nodo)b)); :};
+
+expresion_regular ::= tkConcatenacion:a expresion_regular:b expresion_regular:c {: 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            nuevo.setDer((Nodo)c);
+                            RESULT =  nuevo; :}|
+                    tkDisyuncion:a expresion_regular:b expresion_regular:c {: 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            nuevo.setDer((Nodo)c);
+                            RESULT =  nuevo; :}|
+                    tkKleene:a expresion_regular:b {: 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            RESULT =  nuevo; :}|
+                    tkPositiva:a expresion_regular:b {: 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            RESULT =  nuevo; :}|
+                    tkBooleana:a expresion_regular:b {: 
+                            Nodo nuevo = new Nodo(a);
+                            nuevo.setIzq((Nodo)b);
+                            RESULT =  nuevo; :}|
+                    tkLlaveA tkIdentificador:a  tkLlaveC {: Nodo nuevo = new Nodo(a);
+                              nuevo.setHoja(true);
+                              RESULT =  nuevo; :}|
+                    tkChar:a {: Nodo nuevo = new Nodo(a);
+                              nuevo.setHoja(true);
+                              RESULT =  nuevo; :};
+
 
 notacion_conjuntos::= tkMinuscula tkOnda tkMinuscula|
                     tkMayuscula tkOnda tkMayuscula|
@@ -44,16 +76,8 @@ conj_comas::= tkMinuscula|
                  tkNumero|
                  tkEspeciales;
 
-expresion_regular ::= tkConcatenacion expresion_regular expresion_regular |
-                    tkDisyuncion expresion_regular expresion_regular |
-                    tkKleene expresion_regular |
-                    tkPositiva expresion_regular |
-                    tkBooleana expresion_regular |
-                    tkLlaveA tkIdentificador  tkLlaveC |
-                    tkChar;
+evaluaciones ::= evaluaciones evaluacion|
+            evaluacion;
 
-pruebas ::= pruebas prueba|
-            prueba;
-
-prueba ::= tkIdentificador tkDosPuntos tkString tkPuntoComa|
+evaluacion ::= tkIdentificador tkDosPuntos tkString tkPuntoComa|
            tkIdentificador tkDosPuntos tkChar tkPuntoComa;
