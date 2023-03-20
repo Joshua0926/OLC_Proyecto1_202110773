@@ -22,10 +22,10 @@ public class Expresion_regular {
     private ArrayList<Siguientes> tabla_siguientes = new ArrayList<>();
     private ArrayList<String> terminales = new ArrayList<>();
     private ArrayList<ArrayList> transiciones = new ArrayList<>();
-    private String grafica_arbol_expresion = "";
+    private ArrayList<Integer> estados_aceptacion = new ArrayList<>();
     private String grafica_thompson = "";
     private int num_nodo = 0;
-    private int nodos_thompson = 0;
+    private int nodos_thompson = 1;
     private int num_hoja = 0;
 
     public Nodo getArbol_expresion() {
@@ -45,17 +45,23 @@ public class Expresion_regular {
 
     public void proceso() throws IOException, InterruptedException {
         numerar_nodos(arbol_expresion);
+        System.out.println("nodos numerados");
         metodo_arbol(arbol_expresion);
-        grafica_arbol_expresion += "digraph{label = \"Arbol de expresión\"\n" + g_arbol(arbol_expresion, 0) + "}";
-        crear_archivo("src/carpeta_reporte/ARBOLES_202110773/", "Arbol " + nombre, grafica_arbol_expresion);
+        System.out.println("metodo del arbol");
+        crear_archivo("src/carpeta_reporte/ARBOLES_202110773/", "Arbol " + nombre, "digraph{label = \"Arbol de expresión\"\n" + g_arbol(arbol_expresion, 0) + "}");
+        System.out.println("se ha creado el arbol");
         grafica_thompson += "digraph {label = \"AFND " + nombre
                 + "\";\nrankdir=\"LR\";\nnode [shape=\"circle\"];"
-                + "\nN_0[label=\"\"];\n"
-                + "\nN_1[shape = doublecircle, label=\"\"];\n" + g_thompson(0, 1, arbol_expresion.getIzq()) + "}";
+                + "\nS0;\n"
+                + "\nS1[shape = doublecircle];\n" + g_thompson(0, 1, arbol_expresion.getIzq()) + "}";
         crear_archivo("src/carpeta_reporte/AFND_202110773/", "AFND " + nombre, grafica_thompson);
-        crear_archivo("src/SIGUIENTES_202110773/", "Siguientes " + nombre, g_tabla_siguientes());
+        System.out.println("se ha creado el afn");
+        crear_archivo("src/carpeta_reporte/SIGUIENTES_202110773/", "Siguientes " + nombre, "graph{"+g_tabla_siguientes()+"}");
+        System.out.println("se han creado los siguientes");
         crear_tabla_transiciones();
-        
+        System.out.println("se han creado las transiciones ");
+        crear_archivo("src/carpeta_reporte/TRANSICIONES_202110773/", "Transiciones " + nombre, "graph{"+g_tabla_transiciones()+"}");
+        crear_archivo("src/carpeta_reporte/AFD_202110773/", "AFD " + nombre, "digraph {label = \"AFD " + nombre + "\"\n" + g_afd()+"}");
     }
 
     public void numerar_nodos(Nodo actual) {
@@ -186,7 +192,7 @@ public class Expresion_regular {
         String codigo_dot = "";
 
         if (actual.isHoja()) {
-            codigo_dot += "N_" + primero + " -> N_" + ultimo + "[label=\"" + actual.getDato().replaceAll("\"", "") + "\"];\n";
+            codigo_dot += "S" + primero + " -> S" + ultimo + "[label=\"" + actual.getDato().replaceAll("\"", "") + "\"];\n";
             return codigo_dot;
         }
 
@@ -194,65 +200,65 @@ public class Expresion_regular {
             case "." -> {
                 nodos_thompson += 1;
                 int mitad = nodos_thompson;
-                codigo_dot += "N_" + nodos_thompson + "[label = \"\"];\n";
+                codigo_dot += "S" + nodos_thompson + ";\n";
                 codigo_dot += g_thompson(primero, mitad, actual.getIzq());
                 codigo_dot += g_thompson(mitad, ultimo, actual.getDer());
             }
             case "|" -> {
                 nodos_thompson += 1;
                 int pos_izq = nodos_thompson;
-                codigo_dot += "N_" + pos_izq + "[label = \"\"];\n";
-                codigo_dot += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_izq + ";\n";
+                codigo_dot += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
                 nodos_thompson += 1;
                 int pos_der = nodos_thompson;
-                codigo_dot += "N_" + pos_der + "[label = \"\"];\n";
-                codigo_dot += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_der + ";\n";
+                codigo_dot += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
                 codigo_dot += g_thompson(pos_izq, pos_der, actual.getIzq());
                 nodos_thompson += 1;
                 pos_izq = nodos_thompson;
-                codigo_dot += "N_" + pos_izq + "[label = \"\"];\n";
-                codigo_dot += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_izq + ";\n";
+                codigo_dot += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
                 nodos_thompson += 1;
                 pos_der = nodos_thompson;
-                codigo_dot += "N_" + pos_der + "[label = \"\"];\n";
-                codigo_dot += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_der + ";\n";
+                codigo_dot += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
                 codigo_dot += g_thompson(pos_izq, pos_der, actual.getDer());
             }
             case "+" -> {
                 nodos_thompson += 1;
                 int pos_izq = nodos_thompson;
-                codigo_dot += "N_" + pos_izq + "[label = \"\"];\n";
-                codigo_dot += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_izq + ";\n";
+                codigo_dot += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
                 nodos_thompson += 1;
                 int pos_der = nodos_thompson;
-                codigo_dot += "N_" + pos_der + "[label = \"\"];\n";
-                codigo_dot += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
-                codigo_dot += "N_" + pos_der + " -> N_" + pos_izq + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_der + ";\n";
+                codigo_dot += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_der + " -> S" + pos_izq + "[label=\"ε\"];\n";
                 codigo_dot += g_thompson(pos_izq, pos_der, actual.getIzq());
             }
             case "*" -> {
                 nodos_thompson += 1;
                 int pos_izq = nodos_thompson;
-                codigo_dot += "N_" + pos_izq + "[label = \"\"];\n";
-                codigo_dot += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
-                codigo_dot += "N_" + primero + " -> N_" + ultimo + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_izq + ";\n";
+                codigo_dot += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
+                codigo_dot += "S" + primero + " -> S" + ultimo + "[label=\"ε\"];\n";
                 nodos_thompson += 1;
                 int pos_der = nodos_thompson;
-                codigo_dot += "N_" + pos_der + "[label = \"\"];\n";
-                codigo_dot += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
-                codigo_dot += "N_" + pos_der + " -> N_" + pos_izq + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_der + ";\n";
+                codigo_dot += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_der + " -> S" + pos_izq + "[label=\"ε\"];\n";
                 codigo_dot += g_thompson(pos_izq, pos_der, actual.getIzq());
             }
             case "?" -> {
                 nodos_thompson += 1;
                 int pos_izq = nodos_thompson;
-                codigo_dot += "N_" + pos_izq + "[label = \"\"];\n";
-                codigo_dot += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
-                codigo_dot += "N_" + primero + " -> N_" + ultimo + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_izq + ";\n";
+                codigo_dot += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
+                codigo_dot += "S" + primero + " -> S" + ultimo + "[label=\"ε\"];\n";
                 nodos_thompson += 1;
                 int pos_der = nodos_thompson;
-                codigo_dot += "N_" + pos_der + "[label = \"\"];\n";
-                codigo_dot += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
+                codigo_dot += "S" + pos_der + ";\n";
+                codigo_dot += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
                 codigo_dot += g_thompson(pos_izq, pos_der, actual.getIzq());
             }
         }
@@ -270,7 +276,7 @@ public class Expresion_regular {
         }
 
         if (nodo.isHoja()) {
-            s += "N_" + actual + "[shape = none label=<\n"
+            s += "S" + actual + "[shape = none label=<\n"
                     + " <TABLE border=\"0\" cellspacing=\"2\" cellpadding=\"15\"  >\n"
                     + "  <TR>\n"
                     + "  <TD colspan=\"3\"> Anulable: " + nodo.isAnulable() + "</TD>\n"
@@ -285,7 +291,7 @@ public class Expresion_regular {
                     + "  </TR>\n"
                     + " </TABLE>>];";
         } else {
-            s += "N_" + actual + "[shape = none label=<\n"
+            s += "S" + actual + "[shape = none label=<\n"
                     + " <TABLE border=\"0\" cellspacing=\"2\" cellpadding=\"10\"  >\n"
                     + "  <TR>\n"
                     + "  <TD colspan=\"3\">  Anulable: " + nodo.isAnulable() + "</TD>\n"
@@ -299,7 +305,7 @@ public class Expresion_regular {
         }
 
         if (padre != 0) {
-            s += "N_" + padre + "-> N_" + actual + "[dir=none]; \n";
+            s += "S" + padre + "-> S" + actual + "[dir=none]; \n";
         }
 
         s += g_arbol(nodo.getIzq(), actual);
@@ -313,9 +319,9 @@ public class Expresion_regular {
         String s = "label=<\n"
                 + " <TABLE border=\"1\" cellspacing=\"0\" cellpadding=\"10\"  >\n"
                 + "  <TR>\n"
-                + "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"> <b>Simbolo</b> </font></TD>\n"
-                + "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"> <b>Hoja</b></font></TD>\n"
-                + "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"> <b>Siguientes</b></font></TD>\n"
+                + "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"><b> Simbolo </b></font></TD>\n"
+                + "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"><b> Hoja </b></font></TD>\n"
+                + "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"><b> Siguientes </b></font></TD>\n"
                 + "  </TR>\n";
         for (Siguientes t : tabla_siguientes) {
             s += " <TR>\n"
@@ -326,6 +332,139 @@ public class Expresion_regular {
         }
         s += " </TABLE>>";
         return s;
+    }
+    
+        public String g_tabla_transiciones() {
+        String s = "label=<\n"
+                + " <TABLE border=\"1\" cellspacing=\"2\" cellpadding=\"10\"  >\n"
+                + "  <TR>\n"
+                + "  <TD rowspan=\"2\" bgcolor=\"#A897BC\"> <font color=\"white\"><b> Estado </b></font></TD>\n"
+                + "  <TD colspan=\"" + terminales.size() + "\" bgcolor=\"#A897BC\"> <font color=\"white\"><b> Terminales </b></font></TD>\n"
+                + "  </TR>\n"
+                + "  <TR>\n";
+
+        for (String terminal : terminales) {
+            s += "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"><b> " + terminal + " </b></font></TD>\n";
+        }
+        s += "  </TR>\n"
+                + "  \n";
+        for (ArrayList<ArrayList> fila : transiciones) {
+            s += "  <TR>\n"
+                    + "  <TD>S" + transiciones.indexOf(fila) + " " + fila.get(0) + "</TD>\n";
+            for (int i = 1; i < fila.size(); i++) {
+                ArrayList<Integer> actual = fila.get(i);
+                if (actual.isEmpty()) {
+                    s += "  <TD> [] </TD>\n";
+                }
+                for (ArrayList<ArrayList> estados : transiciones) {
+                    if (estados.get(0).equals(actual)) {
+                        s += "  <TD>S" + transiciones.indexOf(estados) + "</TD>\n";
+                        break;
+                    }
+                }
+            }
+            s += "  </TR>\n";
+        }
+        s += " </TABLE>>";
+        return s;
+    }
+        
+        public String g_afd() {
+        String s = "rankdir=\"LR\";\n"
+                + "node [shape=\"circle\"];\n"
+                + "SI[shape = none];";
+        for (int i = 0; i < transiciones.size(); i++) {
+            if (((ArrayList<ArrayList>) transiciones.get(i)).get(0).contains(tabla_siguientes.size() - 1)) {
+                s += "S" + i + "[shape=\"doublecircle\"];\n";
+                estados_aceptacion.add(i);
+            } else {
+                s += "S" + i + ";\n";
+            }
+        }
+        s += "SI->S0[label=\"Inicio\"];\n";
+        for (ArrayList<ArrayList> f : transiciones) {
+            for (int indice = 1; indice < f.size(); indice++) {
+                ArrayList<Integer> actual = f.get(indice);
+                for (ArrayList<ArrayList> estados : transiciones) {
+                    if (estados.get(0).equals(actual)) {
+                        s += "  S" + transiciones.indexOf(f) + "->S" + transiciones.indexOf(estados) + "[label=\"" + terminales.get(indice - 1).replaceAll("\"", "") + "\"]";
+                        break;
+                    }
+                }
+            }
+        }
+        return s;
+    }
+    
+    public boolean analizar_cadena(ArrayList<Conjunto> conjuntos, String cadena) {
+        int num_estado = 0;
+        int caracter;
+        int num_col;
+        ArrayList<Integer> transicion;
+        boolean encontrado = false;
+
+        for (int indice = 1; indice < cadena.length() - 1; indice++) {
+            ArrayList<ArrayList> estado = transiciones.get(num_estado);
+            caracter = (int) cadena.charAt(indice);
+            encontrado = false;
+            for(int siguiente: (ArrayList<Integer>)estado.get(0)){
+                String t = tabla_siguientes.get(siguiente).getSimbolo();
+                if (t.startsWith("\"") && t.endsWith("\"")) {
+                    if ((int) t.charAt(1) == caracter ) {
+                        encontrado = true;
+                        num_col = terminales.indexOf(t) + 1;
+                        transicion = estado.get(num_col);
+                        for (ArrayList<ArrayList> fila : transiciones) {
+                            if (fila.get(0).equals(transicion)) {
+                                num_estado = transiciones.indexOf(fila);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                } else if (t.startsWith("\\")) {
+                    if ((int) cadena.charAt(indice + 1) == (int) t.charAt(1)) {
+                        encontrado = true;
+                        num_col = terminales.indexOf(t) + 1;
+                        transicion = estado.get(num_col);
+                        indice++;
+                        for (ArrayList<ArrayList> fila : transiciones) {
+                            if (fila.get(0).equals(transicion)) {
+                                num_estado = transiciones.indexOf(fila);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                } else {
+                    ArrayList<Integer> evaluado = new ArrayList<>();
+                    for (Conjunto c : conjuntos) {
+                        if (c.getNombre().equals(t)) {
+                            evaluado = c.getCaracteres();
+                            break;
+                        }
+                    }
+                    if (evaluado.contains(caracter)) {
+                        encontrado = true;
+                        num_col = terminales.indexOf(t) + 1;
+                        transicion = estado.get(num_col);
+                        for (ArrayList<ArrayList> fila : transiciones) {
+                            if (fila.get(0).equals(transicion)) {
+                                num_estado = transiciones.indexOf(fila);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+
+            }
+            if (!encontrado) {
+                return false;
+            }
+        }
+
+        return estados_aceptacion.contains(num_estado);
     }
 
     public void crear_archivo(String dir, String nombre, String texto) throws IOException, InterruptedException {

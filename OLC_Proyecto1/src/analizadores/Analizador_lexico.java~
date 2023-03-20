@@ -250,6 +250,7 @@ public class Analizador_lexico implements java_cup.runtime.Scanner {
   private int zzFinalHighSurrogate = 0;
 
   /* user code: */
+    public String errores="";
 
 
   /**
@@ -640,7 +641,7 @@ public class Analizador_lexico implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { System.out.println("error lexico");
+            { System.out.println("error lexico"); errores += "<tr><td>Léxico</td><td> El caracter \""+yytext()+"\" no pertenece al lenguaje</td><td>"+yyline+"</td><td>"+yycolumn+"</td></tr>\n";
             } 
             // fall through
           case 24: break;

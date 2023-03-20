@@ -4,6 +4,7 @@ import java_cup.runtime.Symbol;
 %%
 
 %{
+    public String errores="";
 %}
 
 %class Analizador_lexico
@@ -73,5 +74,5 @@ tkString = \" ([^\"]|"\\\"")+ \"
 <YYINITIAL> {tkMayuscula} { return new Symbol(sym.tkMayuscula, yyline, yycolumn, yytext());}
 <YYINITIAL> {tkNumero} { return new Symbol(sym.tkNumero, yyline, yycolumn, yytext());}
 <YYINITIAL> {tkEspeciales} { return new Symbol(sym.tkEspeciales, yyline, yycolumn, yytext());}
-<YYINITIAL> . {System.out.println("error lexico");}
+<YYINITIAL> . {System.out.println("error lexico"); errores += "<tr><td>Léxico</td><td> El caracter \""+yytext()+"\" no pertenece al lenguaje</td><td>"+yyline+"</td><td>"+yycolumn+"</td></tr>\n";}
 
