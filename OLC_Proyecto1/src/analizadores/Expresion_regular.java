@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -17,6 +19,9 @@ import java.io.FileNotFoundException;
 public class Expresion_regular {
     private Nodo arbol_expresion;
     private String nombre;
+    private ArrayList<Siguientes> tabla_siguientes = new ArrayList<>();
+    private ArrayList<String> terminales = new ArrayList<>();
+    private ArrayList<ArrayList> transiciones = new ArrayList<>();
     private String grafica_arbol_expresion = "";
     private String grafica_thompson = "";
     private int num_nodo = 0;
@@ -33,6 +38,7 @@ public class Expresion_regular {
         aceptacion.setHoja(true);
         raiz.setDer(aceptacion);
         raiz.setIzq(arbol_expresion);
+        
         this.arbol_expresion = raiz;
         this.nombre = nombre;
     }
@@ -44,9 +50,11 @@ public class Expresion_regular {
         crear_archivo("src/carpeta_reporte/ARBOLES_202110773/", "Arbol " + nombre, grafica_arbol_expresion);
         grafica_thompson += "digraph {label = \"AFND " + nombre
                 + "\";\nrankdir=\"LR\";\nnode [shape=\"circle\"];"
-                + "\nN_0[fontcolor=\"white\"];\n"
-                + "\nN_1[shape = doublecircle, fontcolor=\"white\"];\n" + g_thompson(0, 1, arbol_expresion.getIzq()) + "}";
+                + "\nN_0[label=\"\"];\n"
+                + "\nN_1[shape = doublecircle, label=\"\"];\n" + g_thompson(0, 1, arbol_expresion.getIzq()) + "}";
         crear_archivo("src/carpeta_reporte/AFND_202110773/", "AFND " + nombre, grafica_thompson);
+        crear_archivo("src/SIGUIENTES_202110773/", "Siguientes " + nombre, g_tabla_siguientes());
+        crear_tabla_transiciones();
         
     }
 
@@ -59,6 +67,10 @@ public class Expresion_regular {
         if (actual.isHoja()) {
             actual.setNumero(num_hoja);
             num_hoja++;
+            tabla_siguientes.add(new Siguientes(actual.getDato(), actual.getNumero()));
+            if (!terminales.contains(actual.getDato()) && !actual.getDato().equals("#")) {
+                terminales.add(actual.getDato());
+            }
         }
     }
 
@@ -80,6 +92,9 @@ public class Expresion_regular {
                     actual.setAnulable(true);
                     actual.getPrimeros().addAll(actual.getIzq().getPrimeros());
                     actual.getUltimos().addAll(actual.getIzq().getPrimeros());
+                    for (int est : actual.getIzq().getUltimos()) {
+                        tabla_siguientes.get(est).getSiguientes().addAll(actual.getIzq().getPrimeros());
+                    }
                 }
                 case "?" -> {
                     actual.setAnulable(true);
@@ -90,6 +105,9 @@ public class Expresion_regular {
                     actual.setAnulable(actual.getIzq().isAnulable());
                     actual.getPrimeros().addAll(actual.getIzq().getPrimeros());
                     actual.getUltimos().addAll(actual.getIzq().getPrimeros());
+                    for (int est : actual.getIzq().getUltimos()) {
+                        tabla_siguientes.get(est).getSiguientes().addAll(actual.getIzq().getPrimeros());
+                    }
                 }
                 case "|" -> {
                     actual.setAnulable(actual.getIzq().isAnulable() || actual.getDer().isAnulable());
@@ -112,8 +130,55 @@ public class Expresion_regular {
                     } else {
                         actual.getUltimos().addAll(actual.getDer().getUltimos());
                     }
+                    for (int est : actual.getIzq().getUltimos()) {
+                        tabla_siguientes.get(est).getSiguientes().addAll(actual.getDer().getPrimeros());
+                    }
                 }
             }
+        }
+    }
+    
+    public void crear_tabla_transiciones() {
+        int indice = 0;
+        transiciones.add(new ArrayList<>());
+        ArrayList fila = transiciones.get(0);
+        fila.add(arbol_expresion.getPrimeros());
+        while (indice < transiciones.size()) {
+            fila = transiciones.get(indice);
+            for (String s : terminales) {
+                fila.add(new ArrayList<>());
+            }
+            for (int siguiente : (ArrayList<Integer>) fila.get(0)) {
+                String simbolo = tabla_siguientes.get(siguiente).getSimbolo();
+                if (simbolo.equals("#")) {
+                    continue;
+                }
+                int columna = terminales.indexOf(simbolo) + 1;
+                ArrayList<Integer> col_terminal = (ArrayList<Integer>) fila.get(columna);
+                for (int i : tabla_siguientes.get(siguiente).getSiguientes()) {
+                    if (!col_terminal.contains(i)) {
+                        col_terminal.add(i);
+                    }
+                }
+                Collections.sort(col_terminal);
+            }
+            boolean encontrado;
+            for (int i = 1; i < fila.size(); i++) {
+                encontrado = false;
+                ArrayList<Integer> estado = (ArrayList<Integer>) fila.get(i);
+                for (ArrayList<ArrayList> filas : transiciones) {
+                    if (filas.get(0).equals(estado)) {
+                        encontrado = true;
+                        break;
+                    }
+                }
+                if (!encontrado && !estado.isEmpty()) {
+                    ArrayList<ArrayList> nueva_fila = new ArrayList<>();
+                    nueva_fila.add(estado);
+                    transiciones.add(nueva_fila);
+                }
+            }
+            indice++;
         }
     }
     
@@ -193,7 +258,6 @@ public class Expresion_regular {
         }
         return codigo_dot;
     }
-
     
     public String g_arbol(Nodo nodo, int padre) {
         String s = "";
@@ -244,7 +308,25 @@ public class Expresion_regular {
 
         return s;
     }
-
+    
+    public String g_tabla_siguientes() {
+        String s = "label=<\n"
+                + " <TABLE border=\"1\" cellspacing=\"0\" cellpadding=\"10\"  >\n"
+                + "  <TR>\n"
+                + "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"> <b>Simbolo</b> </font></TD>\n"
+                + "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"> <b>Hoja</b></font></TD>\n"
+                + "  <TD bgcolor=\"#A897BC\"> <font color=\"white\"> <b>Siguientes</b></font></TD>\n"
+                + "  </TR>\n";
+        for (Siguientes t : tabla_siguientes) {
+            s += " <TR>\n"
+                    + "  <TD>" + t.getSimbolo() + "</TD>\n"
+                    + "  <TD>" + t.getHoja() + "</TD>\n"
+                    + "  <TD> " + t.getSiguientes() + "</TD>\n"
+                    + "  </TR>\n";
+        }
+        s += " </TABLE>>";
+        return s;
+    }
 
     public void crear_archivo(String dir, String nombre, String texto) throws IOException, InterruptedException {
         File file = new File(dir, nombre);
