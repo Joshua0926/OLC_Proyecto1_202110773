@@ -1,0 +1,78 @@
+package analizadores;
+import java_cup.runtime.Symbol;
+
+%%
+
+%{
+    public String errores="";
+%}
+
+%class Analizador_lexico
+%public 
+%line 
+%column
+%char 
+%cup 
+%unicode
+
+%init{ 
+    yyline = 0; 
+    yychar = 0; 
+%init}
+
+tkRconj = "CONJ"
+tkDosPuntos=":"
+tkFlecha = "-" {Espacio}* ">"
+tkComa = ","
+tkOnda="~"
+tkLlaveA="{"
+tkLlaveC="}"
+tkConcatenacion="."
+tkDisyuncion="|"
+tkKleene="*"
+tkPositiva="+"
+tkBooleana="?"
+tkPorcentaje="%"
+tkPuntoComa=";"
+Espacio= [ \t\r\n]+
+CMultilinea="<!" ([^!] | ("!" [^\>]))+ "!>"
+CSimple="//".*
+tkMinuscula= [a-z]
+tkMayuscula= [A-Z]
+tkNumero = [0-9]
+tkEspeciales = [ -/:@\[-`{-}]
+Escapados = "\\\""|"\\\'"|"\\n"
+NoEscapados = [^\'\"]
+tkIdentificador = [a-zA-Z_][a-zA-Z0-9_]+
+tkChar = (\" {NoEscapados} \")|{Escapados}
+tkString = \" ([^\"]|"\\\"")+ \"
+
+%%
+<YYINITIAL> {Espacio} {}
+<YYINITIAL> {CMultilinea} {}
+<YYINITIAL> {CSimple} {}
+
+
+<YYINITIAL> {tkRconj} {return new Symbol(sym.tkRconj, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkDosPuntos} {return new Symbol(sym.tkDosPuntos, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkFlecha} { return new Symbol(sym.tkFlecha, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkComa} { return new Symbol(sym.tkComa, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkOnda} { return new Symbol(sym.tkOnda, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkLlaveA} { return new Symbol(sym.tkLlaveA, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkLlaveC} { return new Symbol(sym.tkLlaveC, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkConcatenacion} { return new Symbol(sym.tkConcatenacion, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkDisyuncion} { return new Symbol(sym.tkDisyuncion, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkKleene} { return new Symbol(sym.tkKleene, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkPositiva} { return new Symbol(sym.tkPositiva, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkBooleana} { return new Symbol(sym.tkBooleana, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkPorcentaje} { return new Symbol(sym.tkPorcentaje, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkPuntoComa} { return new Symbol(sym.tkPuntoComa, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkChar} { return new Symbol(sym.tkChar, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkString} {return new Symbol(sym.tkString, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkIdentificador} {return new Symbol(sym.tkIdentificador, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkMinuscula} { return new Symbol(sym.tkMinuscula, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkMayuscula} { return new Symbol(sym.tkMayuscula, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkNumero} { return new Symbol(sym.tkNumero, yyline, yycolumn, yytext());}
+<YYINITIAL> {tkEspeciales} { return new Symbol(sym.tkEspeciales, yyline, yycolumn, yytext());}
+<YYINITIAL> . {System.out.println("error lexico"); errores += "<tr><td>Léxico</td><td> El caracter \""+yytext()+"\" no pertenece al lenguaje</td><td>"+yyline+"</td><td>"+yycolumn+"</td></tr>\n";}
+
